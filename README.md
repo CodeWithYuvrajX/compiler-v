@@ -43,6 +43,18 @@ npm start
 
 Open `http://localhost:3000`. On Windows, `gcc` must be available in the terminal used to start Node. Set another port with `PORT=8080 npm start` or `$env:PORT=8080; npm start` in PowerShell.
 
+## Publish on GitHub Pages
+
+GitHub Pages hosts the static frontend only. The C-powered API must run on a server such as Render. This repository includes `render.yaml` and `.github/workflows/pages.yml` for that split deployment.
+
+1. Create a Render Web Service from this GitHub repository. Render will detect `render.yaml`; use the generated public URL, for example `https://tac-generator-api.onrender.com`.
+2. In GitHub, open **Settings > Secrets and variables > Actions > Variables > New repository variable**.
+3. Create `TAC_API_URL` with the Render URL, without a trailing slash.
+4. Open **Settings > Pages**, choose **GitHub Actions** as the source, then push to `master` or run the `Deploy TAC Generator frontend` workflow manually.
+5. Your site will be available at `https://<github-user>.github.io/compiler-v/`.
+
+For local development, leave `frontend/config.js` empty and run `npm start`. The production workflow writes the GitHub Actions variable into the deployed frontend automatically.
+
 ## How TAC generation works
 
 The C program separates the left side of the assignment, tokenizes the right side, and parses it with recursive-descent functions. `parsePrimary` handles values and parenthesized expressions, `parseTerm` handles multiplication, division, and modulus, and `parseExpression` handles addition and subtraction. Each reduction creates the next temporary (`t1`, `t2`, ...), followed by the final assignment.

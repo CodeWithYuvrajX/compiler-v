@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: tac-generator-api
+    runtime: node
+    buildCommand: npm install && gcc -std=c11 -Wall -Wextra -O2 compiler/tac_generator.c -o compiler/tac_generator
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20

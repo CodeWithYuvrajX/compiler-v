@@ -1,0 +1,41 @@
+name: Deploy TAC Generator frontend
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Prepare frontend
+        env:
+          TAC_API_URL: ${{ vars.TAC_API_URL }}
+        run: |
+          mkdir site
+          cp frontend/index.html frontend/style.css frontend/script.js site/
+          printf "window.TAC_API_URL = '%s';\n" "$TAC_API_URL" > site/config.js
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

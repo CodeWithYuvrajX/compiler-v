@@ -3,7 +3,7 @@ const generateButton = document.querySelector('#generateButton');
 const output = document.querySelector('#tacOutput');
 const notification = document.querySelector('#notification');
 const status = document.querySelector('#outputStatus');
-const apiBase = window.location.port === '3000' ? '' : 'http://localhost:3000';
+const apiBase = window.TAC_API_URL || (window.location.port === '3000' ? '' : 'http://localhost:3000');
 let lastTac = '';
 
 function showNotification(message) {
