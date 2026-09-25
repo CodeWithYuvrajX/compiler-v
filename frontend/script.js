@@ -4,7 +4,7 @@ const output = document.querySelector('#tacOutput');
 const notification = document.querySelector('#notification');
 const status = document.querySelector('#outputStatus');
 const isLocalApp = window.location.port === '3000' || window.location.protocol === 'file:';
-const apiBase = window.TAC_API_URL || (isLocalApp ? 'http://localhost:3000' : '');
+const apiBase = (window.TAC_API_URL || (isLocalApp ? 'http://localhost:3000' : '')).replace(/\/+$/, '');
 let lastTac = '';
 
 function showNotification(message) {

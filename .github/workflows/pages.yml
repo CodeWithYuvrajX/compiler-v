@@ -32,7 +32,7 @@ jobs:
           test -n "$TAC_API_URL" || (echo "TAC_API_URL is not configured. Add it in Settings > Secrets and variables > Actions > Variables." && exit 1)
           mkdir site
           cp frontend/index.html frontend/style.css frontend/script.js site/
-          printf "window.TAC_API_URL = '%s';\n" "$TAC_API_URL" > site/config.js
+          printf "window.TAC_API_URL = '%s';\n" "${TAC_API_URL%/}" > site/config.js
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
