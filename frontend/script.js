@@ -3,7 +3,8 @@ const generateButton = document.querySelector('#generateButton');
 const output = document.querySelector('#tacOutput');
 const notification = document.querySelector('#notification');
 const status = document.querySelector('#outputStatus');
-const apiBase = window.TAC_API_URL || (window.location.port === '3000' ? '' : 'http://localhost:3000');
+const isLocalApp = window.location.port === '3000' || window.location.protocol === 'file:';
+const apiBase = window.TAC_API_URL || (isLocalApp ? 'http://localhost:3000' : '');
 let lastTac = '';
 
 function showNotification(message) {
@@ -42,6 +43,7 @@ async function generateTac() {
   generateButton.disabled = true;
   status.textContent = 'Parsing expression...';
   try {
+    if (!apiBase) throw new Error('The production API URL is not configured. Set the TAC_API_URL GitHub variable.');
     const response = await fetch(`${apiBase}/api/generate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ expression }) });
     const contentType = response.headers.get('content-type') || '';
     const data = contentType.includes('application/json') ? await response.json() : { error: 'Backend server se JSON response nahi mila. Pehle npm start run karein.' };
