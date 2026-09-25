@@ -1,0 +1,7 @@
+{
+  "name": "tac-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A C-powered Three Address Code educational web application.",
+  "scripts": { "start": "node backend/server.js", "dev": "node backend/server.js" }
+}

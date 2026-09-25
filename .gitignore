@@ -1,0 +1,4 @@
+compiler/tac_generator
+compiler/tac_generator.exe
+compiler/tac_output.tmp
+node_modules/

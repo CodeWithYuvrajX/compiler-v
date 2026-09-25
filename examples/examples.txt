@@ -1,0 +1,4 @@
+Example 1: a = b + c * d
+Example 2: x = (a + b) * c
+Example 3: result = a + b * c - d
+Example 4: x = (a + b) * (c - d)
